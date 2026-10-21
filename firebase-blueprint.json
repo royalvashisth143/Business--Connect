@@ -1,0 +1,222 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with role management and contact details",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "roles": { "type": "array" },
+        "activeRole": { "type": "string" },
+        "businessId": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Business": {
+      "title": "Business Listing",
+      "description": "Registered business or company profile in the directory",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "category": { "type": "string" },
+        "subcategory": { "type": "string" },
+        "description": { "type": "string" },
+        "logo": { "type": "string" },
+        "ownerUid": { "type": "string" },
+        "phone": { "type": "string" },
+        "whatsapp": { "type": "string" },
+        "email": { "type": "string" },
+        "website": { "type": "string" },
+        "address": { "type": "string" },
+        "locality": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "pincode": { "type": "string" },
+        "gstin": { "type": "string" },
+        "businessType": { "type": "string" },
+        "isVerified": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "rating": { "type": "number" },
+        "reviewCount": { "type": "number" },
+        "establishedYear": { "type": "number" },
+        "status": { "type": "string" }
+      },
+      "required": ["name", "category", "city", "state"]
+    },
+    "Product": {
+      "title": "Product Item",
+      "description": "Wholesale or retail product item listed by seller or supplier",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "slug": { "type": "string" },
+        "sku": { "type": "string" },
+        "category": { "type": "string" },
+        "sellerId": { "type": "string" },
+        "businessId": { "type": "string" },
+        "businessName": { "type": "string" },
+        "wholesalePrice": { "type": "number" },
+        "retailPrice": { "type": "number" },
+        "moq": { "type": "number" },
+        "unit": { "type": "string" },
+        "stock": { "type": "number" },
+        "isWholesale": { "type": "boolean" },
+        "isRetail": { "type": "boolean" },
+        "isApproved": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "description": { "type": "string" },
+        "images": { "type": "array" }
+      },
+      "required": ["name", "category", "wholesalePrice"]
+    },
+    "RFQ": {
+      "title": "Request for Quotation",
+      "description": "Buyer requirement posted to suppliers",
+      "type": "object",
+      "properties": {
+        "buyerUid": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "buyerPhone": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string" },
+        "quantity": { "type": "number" },
+        "unit": { "type": "string" },
+        "budget": { "type": "number" },
+        "deliveryCity": { "type": "string" },
+        "deliveryState": { "type": "string" },
+        "expectedDate": { "type": "string" },
+        "description": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["title", "category", "quantity", "deliveryCity"]
+    },
+    "Quotation": {
+      "title": "Supplier Quotation",
+      "description": "Quotation submitted in response to an RFQ",
+      "type": "object",
+      "properties": {
+        "rfqId": { "type": "string" },
+        "supplierUid": { "type": "string" },
+        "supplierBusinessName": { "type": "string" },
+        "unitPrice": { "type": "number" },
+        "moq": { "type": "number" },
+        "deliveryTime": { "type": "string" },
+        "shippingTerms": { "type": "string" },
+        "validity": { "type": "string" },
+        "notes": { "type": "string" },
+        "status": { "type": "string" }
+      },
+      "required": ["rfqId", "supplierUid", "unitPrice"]
+    },
+    "Order": {
+      "title": "E-commerce Order",
+      "description": "Retail customer purchase order",
+      "type": "object",
+      "properties": {
+        "customerUid": { "type": "string" },
+        "customerName": { "type": "string" },
+        "customerPhone": { "type": "string" },
+        "customerEmail": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "gstAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "paymentStatus": { "type": "string" },
+        "orderStatus": { "type": "string" },
+        "shippingAddress": { "type": "string" }
+      },
+      "required": ["customerName", "totalAmount", "orderStatus"]
+    },
+    "Lead": {
+      "title": "Business Lead",
+      "description": "Qualified buyer enquiry tracked in Seller CRM",
+      "type": "object",
+      "properties": {
+        "businessId": { "type": "string" },
+        "sellerUid": { "type": "string" },
+        "buyerName": { "type": "string" },
+        "buyerPhone": { "type": "string" },
+        "buyerEmail": { "type": "string" },
+        "productTitle": { "type": "string" },
+        "quantity": { "type": "string" },
+        "source": { "type": "string" },
+        "status": { "type": "string" },
+        "notes": { "type": "string" }
+      },
+      "required": ["businessId", "buyerName", "status"]
+    },
+    "Review": {
+      "title": "User Review",
+      "description": "Rating and feedback for businesses and products",
+      "type": "object",
+      "properties": {
+        "businessId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "rating": { "type": "number" },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["businessId", "rating", "comment"]
+    },
+    "SearchLog": {
+      "title": "Search Query Log",
+      "description": "Telemetry event recording user search queries, category selections, and result counts",
+      "type": "object",
+      "properties": {
+        "query": { "type": "string" },
+        "category": { "type": "string" },
+        "city": { "type": "string" },
+        "resultCount": { "type": "number" },
+        "isZeroResult": { "type": "boolean" },
+        "userRole": { "type": "string" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["query", "resultCount", "isZeroResult", "timestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile collection"
+    },
+    "/businesses/{businessId}": {
+      "schema": "Business",
+      "description": "Business directory listings"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Products marketplace catalog"
+    },
+    "/rfqs/{rfqId}": {
+      "schema": "RFQ",
+      "description": "Buyer RFQ requests"
+    },
+    "/quotations/{quotationId}": {
+      "schema": "Quotation",
+      "description": "Quotations submitted to RFQs"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Customer purchase orders"
+    },
+    "/leads/{leadId}": {
+      "schema": "Lead",
+      "description": "Seller CRM enquiry leads"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "Review",
+      "description": "Customer reviews and ratings"
+    },
+    "/search_logs/{logId}": {
+      "schema": "SearchLog",
+      "description": "Search analytics queries and zero-result tracking"
+    }
+  }
+}

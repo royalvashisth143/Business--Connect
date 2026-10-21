@@ -1,0 +1,6 @@
+{
+  "name": "BUSINESS CONNECT",
+  "description": "Next-Generation B2B & B2C Marketplace, Business Directory, Wholesale Portal, Local Discovery and Lead Generation Platform for India.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

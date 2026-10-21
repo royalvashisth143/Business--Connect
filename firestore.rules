@@ -1,0 +1,96 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn() && request.auth.uid == userId;
+      allow delete: if false;
+    }
+
+    // Businesses collection - Public read for directory discovery
+    match /businesses/{businessId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn() && (
+        resource.data.ownerUid == request.auth.uid ||
+        request.resource.data.ownerUid == request.auth.uid
+      );
+      allow delete: if isSignedIn() && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // Products collection - Public read for catalog and marketplace
+    match /products/{productId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update, delete: if isSignedIn() && (
+        resource.data.sellerId == request.auth.uid ||
+        request.resource.data.sellerId == request.auth.uid
+      );
+    }
+
+    // RFQ collection - Public/Supplier read for open requirements
+    match /rfqs/{rfqId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isSignedIn();
+    }
+
+    // Quotations collection - Viewable by RFQ participants and suppliers
+    match /quotations/{quotationId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn();
+    }
+
+    // Orders collection
+    match /orders/{orderId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if isSignedIn();
+      allow delete: if false;
+    }
+
+    // Leads collection - CRM
+    match /leads/{leadId} {
+      allow read: if true;
+      allow create: if true;
+      allow update: if true;
+      allow delete: if isSignedIn();
+    }
+
+    // Reviews collection
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isSignedIn();
+    }
+
+    // Search logs collection - Telemetry for search analytics and zero-result monitoring
+    match /search_logs/{logId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if isSignedIn();
+    }
+
+    // Test connection doc
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+  }
+}
